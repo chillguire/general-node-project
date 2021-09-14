@@ -59,11 +59,20 @@ app.get('/', isLoggedIn, (req, res) => {
 		pageTitle: 'uwu',
 	}
 
-	res.status(200).render('home', payload);
+	res.status(200).render('home/home', payload);
 });
 
 const authRoutes = require('./routes/auth');
 app.use(authRoutes);
+
+const postsRoutes = require('./routes/posts');
+app.use('/posts', postsRoutes);
+
+const profileRoutes = require('./routes/profile');
+app.use('/profile', profileRoutes);
+
+const uploadRoutes = require('./routes/upload');
+app.use('/uploads', uploadRoutes);
 
 app.all('*', isLoggedIn, (req, res) => {
 	res.sendStatus(404);
@@ -71,7 +80,7 @@ app.all('*', isLoggedIn, (req, res) => {
 
 
 //** APP.LISTEN
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 20001;
 http.listen(port, () => {
 	console.log(`Running: ${port}`);
 });

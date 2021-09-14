@@ -116,3 +116,9 @@ module.exports.login = async (req, res) => {
 		return res.status(500).render('auth/login', payload);
 	}
 }
+
+module.exports.logout = async (req, res) => {
+	req.session.destroy(function (error) {
+		res.send('/');
+	});
+}

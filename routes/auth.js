@@ -3,7 +3,7 @@ const router = express.Router();
 
 const auth = require('../controller/auth');
 
-const { isLoggedOut } = require('../middleware/middleware');
+const { isLoggedOut, isLoggedIn } = require('../middleware/middleware');
 
 
 router.route('/register')
@@ -14,5 +14,7 @@ router.route('/login')
 	.get(isLoggedOut, auth.renderLoginForm)
 	.post(isLoggedOut, auth.login);
 
+router.route('/logout')
+	.post(isLoggedIn, auth.logout);
 
 module.exports = router;

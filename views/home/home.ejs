@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title><%= pageTitle %></title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animsition/3.2.1/css/animsition.min.css"
+		integrity="sha512-/T8xGJ7rJUbE4bn2PW9wvEAF53I9piLzo+MbB+UNQ7h2PDhe0GfLP6dKSoGciFkhcKvvefRkoH3IwLwzm14xgg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!--===============================================================================================-->
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css"
+		integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!--===============================================================================================-->
+
+	<style>
+		body {
+			color: #566787;
+			background: #f5f5f5;
+			font-family: 'Varela Round', sans-serif;
+			font-size: 13px;
+		}
+
+		.table-wrapper {
+			min-width: 1000px;
+			background: #fff;
+			padding: 20px 25px;
+			border-radius: 3px;
+			box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+		}
+
+		.table-title {
+			padding-bottom: 15px;
+			background: #299be4;
+			color: #fff;
+			padding: 16px 30px;
+			margin: -20px -25px 10px;
+			border-radius: 3px 3px 0 0;
+		}
+
+		.table-title h2 {
+			margin: 5px 0 0;
+			font-size: 24px;
+		}
+
+		.table-title .btn {
+			color: #566787;
+			float: right;
+			font-size: 13px;
+			background: #fff;
+			border: none;
+			min-width: 50px;
+			border-radius: 2px;
+			border: none;
+			outline: none !important;
+			margin-left: 10px;
+		}
+
+		.table-title .btn:hover,
+		.table-title .btn:focus {
+			color: #566787;
+			background: #f2f2f2;
+		}
+
+		.table-title .btn i {
+			float: left;
+			font-size: 21px;
+			margin-right: 5px;
+		}
+
+		.table-title .btn span {
+			float: left;
+			margin-top: 2px;
+		}
+
+		table.table tr th,
+		table.table tr td {
+			border-color: #e9e9e9;
+			padding: 12px 15px;
+			vertical-align: middle;
+		}
+
+		table.table tr th:first-child {
+			width: 60px;
+		}
+
+		table.table tr th:last-child {
+			width: 100px;
+		}
+
+		table.table-striped tbody tr:nth-of-type(odd) {
+			background-color: #fcfcfc;
+		}
+
+		table.table-striped.table-hover tbody tr:hover {
+			background: #f5f5f5;
+		}
+
+		table.table th i {
+			font-size: 13px;
+			margin: 0 5px;
+			cursor: pointer;
+		}
+
+		table.table td:last-child i {
+			opacity: 0.9;
+			font-size: 22px;
+			margin: 0 5px;
+		}
+
+		table.table td a {
+			font-weight: bold;
+			color: #566787;
+			display: inline-block;
+			text-decoration: none;
+		}
+
+		table.table td a:hover {
+			color: #2196F3;
+		}
+
+		table.table td a.settings {
+			color: #2196F3;
+		}
+
+		table.table td a.delete {
+			color: #F44336;
+		}
+
+		table.table td i {
+			font-size: 19px;
+		}
+
+		table.table .avatar {
+			border-radius: 50%;
+			vertical-align: middle;
+			margin-right: 10px;
+			width: 100%;
+		}
+
+		.status {
+			font-size: 30px;
+			margin: 2px 2px 0 0;
+			display: inline-block;
+			vertical-align: middle;
+			line-height: 10px;
+		}
+
+		.text-success {
+			color: #10c469;
+		}
+
+		.text-info {
+			color: #62c9e8;
+		}
+
+		.text-warning {
+			color: #FFC107;
+		}
+
+		.text-danger {
+			color: #ff5b5b;
+		}
+
+		.pagination {
+			float: right;
+			margin: 0 0 5px;
+		}
+
+		.pagination li a {
+			border: none;
+			font-size: 13px;
+			min-width: 30px;
+			min-height: 30px;
+			color: #999;
+			margin: 0 2px;
+			line-height: 30px;
+			border-radius: 2px !important;
+			text-align: center;
+			padding: 0 6px;
+		}
+
+		.pagination li a:hover {
+			color: #666;
+		}
+
+		.pagination li.active a,
+		.pagination li.active a.page-link {
+			background: #03A9F4;
+		}
+
+		.pagination li.active a:hover {
+			background: #0397d6;
+		}
+
+		.pagination li.disabled i {
+			color: #ccc;
+		}
+
+		.pagination li i {
+			font-size: 16px;
+			padding-top: 6px
+		}
+
+		.hint-text {
+			float: left;
+			margin-top: 10px;
+			font-size: 13px;
+		}
+
+		.form-check-input {
+			position: absolute;
+			margin-top: .25rem;
+			margin-left: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-xl">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-sm-5">
+							<h2>User <b>Management</b></h2>
+						</div>
+						<div class="col-sm-7">
+							<a href="#" class="btn btn-secondary" id="btn-logout"><i class="material-icons">&#xe9ba;</i>
+								<span>Exit</span></a>
+							<a href="#" class="btn btn-secondary" id="btn-add"><i class="material-icons">&#xE147;</i>
+								<span>Add New
+									User</span></a>
+							<a href="#" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to
+									Excel</span></a>
+						</div>
+					</div>
+				</div>
+
+				<form id='frm-add'>
+					<div class="form-row align-items-center">
+						<div class="col-auto">
+							<label class="sr-only" for="inlineFormInput">Name</label>
+							<input id='input-text' type="text" class="form-control mb-2" id="inlineFormInput"
+								placeholder="Jane Doe">
+						</div>
+						<div class="col-auto">
+							<button type="submit" class="btn btn-primary mb-2">Submit</button>
+						</div>
+					</div>
+				</form>
+
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Date Created</th>
+							<th>Role</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id='tableee'>
+					</tbody>
+				</table>
+				<div class="clearfix">
+					<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+					<ul class="pagination">
+						<li class="page-item disabled"><a href="#">Previous</a></li>
+						<li class="page-item"><a href="#" class="page-link">1</a></li>
+						<li class="page-item"><a href="#" class="page-link">2</a></li>
+						<li class="page-item active"><a href="#" class="page-link">3</a></li>
+						<li class="page-item"><a href="#" class="page-link">4</a></li>
+						<li class="page-item"><a href="#" class="page-link">5</a></li>
+						<li class="page-item"><a href="#" class="page-link">Next</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--===============================================================================================-->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<!--===============================================================================================-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/3.2.1/js/animsition.min.js"
+		integrity="sha512-A6ariLe+TnwXgF0FtGuOAZB4MuNxxS1W+NvJZxN3fcXYtcrxHu7Z8yJ2MBk7MwnZuG70ksTGdAUyUEbbXW6Imw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<!--===============================================================================================-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"
+		integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<!--===============================================================================================-->
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"
+		integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<!--===============================================================================================-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/countdown/2.6.0/countdown.min.js"
+		integrity="sha512-FkM4ZGExuYz4rILLbNzw8f3HxTN9EKdXrQYcYfdluxJBjRLthYPxxZixV/787qjN3JLs2607yN5XknR/cQMU8w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+	<script type="text/javascript">
+		document.getElementById('btn-logout').addEventListener('click', function (event) {
+			event.preventDefault();
+
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", '/logout', true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+			xhr.onreadystatechange = function () {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					window.location.replace(xhr.response);
+				}
+			}
+
+			xhr.send();
+		});
+
+		document.getElementById('btn-add').addEventListener('click', function (event) {
+			event.preventDefault();
+
+			let frmHidden = document.getElementById("frm-add");
+			frmHidden.hidden = !(frmHidden.hidden);
+
+		});
+
+		document.getElementById('frm-add').addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			let value = document.getElementById('input-text').value.trim();
+			document.getElementById('input-text').value = '';
+
+			if (value === '') return alert('no text');
+			const data = {
+				content: value,
+			}
+
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", '/posts', true);
+			//xhr.setRequestHeader("Content-Type", "multipart/form-data");
+			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhr.onreadystatechange = function () {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 201) {
+					//let row = document.createElement('tr');
+					prepareHTML(JSON.parse(xhr.response));
+					// row.innerHTML = response;
+					// let table = document.getElementById('tableee');
+					// table.insertBefore(row, table.firstChild);
+				}
+			}
+
+			xhr.send(JSON.stringify(data));
+
+		});
+
+		function prepareHTML(data) {
+			let table = document.getElementById('tableee');
+			for (let i = 0; i < data.length; i++) {
+				let row = document.createElement('tr');
+				row.innerHTML = `
+				<td><a href="/profile/${data[i].createdBy.username}"><img src="${data[i].createdBy.avatar || 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg'}" class="avatar" alt="Avatar">
+									${data[i].createdBy.username}</a></td>
+				<td>${timeSince(data[i].createdAt)}</td>
+				<td>Admin</td>
+				<td><span>${data[i].content}</td>
+				<td>
+					<a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
+							class="material-icons">&#xE8B8;</i></a>
+					<a href="#" data-id='${data[i]._id}' class="delete" title="Delete" data-toggle="tooltip"><i
+							class="material-icons">&#xE5C9;</i></a>
+				</td>
+			`;
+				table.insertBefore(row, table.firstChild);
+			}
+		}
+
+		function timeSince(date) {
+			var seconds = Math.floor((new Date() - new Date(date)) / 1000);
+			var interval = seconds / 31536000;
+			if (interval > 1) {
+				return `Hace ${Math.floor(interval)} ${(Math.floor(interval) > 1) ? 'años' : 'año'}`;
+			}
+			interval = seconds / 2592000;
+			if (interval > 1) {
+				return `Hace ${Math.floor(interval)} ${(Math.floor(interval) > 1) ? 'meses' : 'mes'}`;
+			}
+			interval = seconds / 86400;
+			if (interval > 1) {
+				return `Hace ${Math.floor(interval)} ${(Math.floor(interval) > 1) ? 'días' : 'día'}`;
+			}
+			interval = seconds / 3600;
+			if (interval > 1) {
+				return `Hace ${Math.floor(interval)} ${(Math.floor(interval) > 1) ? 'horas' : 'hora'}`;
+			}
+			interval = seconds / 60;
+			if (interval > 1) {
+				return `Hace ${Math.floor(interval)} ${(Math.floor(interval) > 1) ? 'minutos' : 'minuto'}`;
+			}
+			return `Hace ${Math.floor(seconds)} ${(Math.floor(seconds) > 1) ? 'segundos' : 'segundo'}`;
+		}
+
+		window.addEventListener("load", function () {
+			let xhr = new XMLHttpRequest();
+			xhr.open("GET", '/posts');
+			xhr.onreadystatechange = function () {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					//alert(JSON.parse(xhr.response).length);
+					prepareHTML(JSON.parse(xhr.response));
+				}
+			}
+
+			xhr.send();
+		});
+
+		document.addEventListener('click', function (event) {
+			if (event.target.className === 'material-icons') {
+				event.preventDefault();
+				const row = event.target.parentElement.parentElement.parentElement;
+				const id = event.target.parentElement.getAttribute('data-id');
+
+				let xhr = new XMLHttpRequest();
+				xhr.open("DELETE", `/posts/${id}`, true);
+				//xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+				xhr.onreadystatechange = function () {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 204) {
+						row.remove();
+					}
+				}
+
+				xhr.send();
+			}
+		});
+	</script>
+
+
+</body>
+
+</html>
