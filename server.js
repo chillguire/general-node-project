@@ -66,10 +66,10 @@ const authRoutes = require('./routes/auth');
 app.use(authRoutes);
 
 const postsRoutes = require('./routes/posts');
-app.use('/posts', postsRoutes);
+app.use('/api/posts', postsRoutes);
 
 const profileRoutes = require('./routes/profile');
-app.use('/profile', profileRoutes);
+app.use(profileRoutes);
 
 const uploadRoutes = require('./routes/upload');
 app.use('/uploads', uploadRoutes);

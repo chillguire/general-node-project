@@ -6,10 +6,10 @@ const profile = require('../controller/profile');
 const { isLoggedIn } = require('../middleware/middleware');
 
 
-router.route('/avatar')
+router.route('/api/profile/avatar')
 	.post(isLoggedIn, profile.uploadAvatar);
 
-router.route('/:username')
+router.route('/profile/:username')
 	.get(isLoggedIn, profile.load);
 
 module.exports = router;
