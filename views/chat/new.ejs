@@ -1,0 +1,32 @@
+<%- include ('../partials/head') -%>
+
+<link rel="icon" type="image/png" href="../images/icons/favicon.ico">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+</head>
+
+<body>
+
+	<div class="col-5 m-auto">
+		<div class="form-group row mt-5 mb-3">
+			<label for="inputUser" class="col-form-label">To</label>
+			<div class="col">
+				<input type="text" class="form-control" id="inputUser" placeholder="Username">
+			</div>
+		</div>
+		<div id='selectedUsers' class="mt-2 mb-5"></div>
+		<div id='results'></div>
+		<div class="row">
+			<button id='submit' class="btn btn-block btn-primary">New chat</button>
+		</div>
+	</div>
+
+	<%- include ('../partials/scripts') -%>
+	<script>
+		const userID = "<%= currentUser.id %>";
+	</script>
+	<script src="../../js/main.js"></script>
+	<script src="../../js/chat.js"></script>
+</body>
+
+</html>

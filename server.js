@@ -68,11 +68,17 @@ app.use(authRoutes);
 const postsRoutes = require('./routes/posts');
 app.use('/api/posts', postsRoutes);
 
+const usersRoutes = require('./routes/users');
+app.use('/api/users', usersRoutes);
+
 const profileRoutes = require('./routes/profile');
 app.use(profileRoutes);
 
 const uploadRoutes = require('./routes/upload');
 app.use('/uploads', uploadRoutes);
+
+const chatRoutes = require('./routes/chat');
+app.use(chatRoutes);
 
 app.all('*', isLoggedIn, (req, res) => {
 	res.sendStatus(404);

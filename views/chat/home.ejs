@@ -1,0 +1,28 @@
+<%- include ('../partials/head') -%>
+
+<link rel="icon" type="image/png" href="../images/icons/favicon.ico">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+</head>
+
+<body>
+
+	<div class="bg-gray px-4 py-2 mb-2">
+		<a href="/" class="h5 mb-0 py-1 d-inline-block">Chats</a>
+		<a href="/chats/new" class="btn btn-primary float-right">Nuevo</a>
+	</div>
+
+	<div class="messages-box">
+		<div class="list-group rounded-0" id='results'>
+		</div>
+	</div>
+
+	<%- include ('../partials/scripts') -%>
+	<script>
+		const userID = "<%= currentUser.id %>";
+	</script>
+	<script src="../../js/main.js"></script>
+	<script src="../../js/chat.js"></script>
+</body>
+
+</html>
