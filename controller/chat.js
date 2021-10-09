@@ -1,5 +1,6 @@
 const Chat = require('../models/chat');
 const Message = require('../models/messages');
+const Notification = require('../models/notification');
 const User = require('../models/user');
 const ObjectID = require('mongoose').Types.ObjectId;
 
@@ -141,7 +142,14 @@ module.exports.createMessage = async (req, res) => {
 		message = await User.populate(message, { path: 'sender' });
 		message = await Chat.populate(message, { path: 'chat' });
 
-		await Chat.findByIdAndUpdate(req.body.chat, { latestMessage: message._id });
+		const chat = await Chat.findByIdAndUpdate(req.body.chat, { latestMessage: message._id });
+		for (let i = 0; i < chat.users.length; i++) {
+			if (chat.users[i].equals(message.sender._id)) {
+				continue;
+			}
+
+			Notification.insertNotification(chat.users[i], message.sender._id, "message", message.chat._id);
+		}
 
 		return res.status(201).send([message]);
 	} catch (error) {
@@ -157,6 +165,18 @@ module.exports.loadMessages = async (req, res) => {
 			.sort({ updatedAt: 1 });
 
 		res.status(200).send(messages);
+	} catch (error) {
+		console.log(error.message);
+		return res.status(500).end();
+	}
+}
+
+module.exports.markAsRead = async (req, res) => {
+	try {
+		await Message.updateMany({ chat: req.params.id }, { $addToSet: { readBy: req.session.user.id } });
+		await Notification.updateMany({ contentID: req.params.id, toUser: req.session.user.id }, { opened: true });
+
+		res.sendStatus(204);
 	} catch (error) {
 		console.log(error.message);
 		return res.status(500).end();

@@ -20,7 +20,9 @@
 							<a href="#" class="btn btn-secondary" id="btn-add"><i class="material-icons">&#xE147;</i>
 								<span>New post</span></a>
 							<a href="/chats" class="btn btn-secondary"><i class="material-icons">&#xe0b7;</i>
-								<span>Chat</span></a>
+								<span>Chat
+									<span id='message-badge' class="badge badge-danger"></span>
+								</span></a>
 						</div>
 					</div>
 				</div>
@@ -68,6 +70,9 @@
 	</div>
 
 	<%- include ('../partials/scripts') -%>
+	<script>
+		const userID = "<%= currentUser.id %>";
+	</script>
 	<script src="js/main.js"></script>
 	<script src="js/home.js"></script>
 

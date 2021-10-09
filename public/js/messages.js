@@ -1,4 +1,18 @@
+let typing = false;
+let lastTypingTime;
 window.addEventListener("load", function () {
+
+	socket.emit('join chat room', chatID);
+
+	const typingIndicator = document.getElementById('typing-indicator');
+	socket.on('user typing', () => {
+		typingIndicator.hidden = false;
+	});
+
+	socket.on('user stopped typing', () => {
+		typingIndicator.hidden = true;
+	});
+
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", `/api/chat/${chatID}`);
 	xhr.onreadystatechange = function () {
@@ -10,20 +24,33 @@ window.addEventListener("load", function () {
 				}
 			}
 			showChatName(response);
+			getMessagesOnLoad();
+		}
+	}
+
+	xhr.send();
+
+	markMessagesAsRead();
+});
+
+function markMessagesAsRead() {
+	let xhr = new XMLHttpRequest();
+	xhr.open("PUT", `/api/chat/${chatID}/markAsRead`);
+	xhr.onreadystatechange = function () {
+		if (this.readyState === XMLHttpRequest.DONE && this.status === 204) {
 			getMessages();
 		}
 	}
 
 	xhr.send();
-});
+}
 
-function getMessages() {
+function getMessagesOnLoad() {
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", `/api/chat/${chatID}/messages`);
 	xhr.onreadystatechange = function () {
 		if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 			const response = JSON.parse(xhr.response);
-			console.log(response);
 			outputMessageHTML(response);
 		}
 	}
@@ -108,6 +135,20 @@ document.getElementById('button-addon2').addEventListener('click', function (eve
 });
 
 document.getElementById('input-addon2').addEventListener('keydown', function (event) {
+
+	if (!typing) {
+		typing = true;
+		socket.emit('start typing', chatID);
+	}
+	lastTypingTime = new Date().getTime();
+	setTimeout(() => {
+		let currentTime = new Date().getTime();
+		if ((currentTime - lastTypingTime) >= 3000) {
+			typing = false;
+			socket.emit('stop typing', chatID);
+		}
+	}, 3000);
+
 	if (event.key === 'Enter') {
 		submitMessage();
 	}
@@ -122,6 +163,9 @@ function submitMessage() {
 }
 
 function sendMessage(content) {
+	typing = false;
+	socket.emit('stop typing', chatID);
+
 	const message = {
 		content: content,
 		chat: chatID,
@@ -133,8 +177,9 @@ function sendMessage(content) {
 	xhr.onreadystatechange = function () {
 		if (this.readyState === XMLHttpRequest.DONE && this.status === 201) {
 			const response = JSON.parse(xhr.response);
-			console.log(response);
 			outputMessageHTML(response);
+
+			socket.emit('new message', response);
 		}
 	}
 

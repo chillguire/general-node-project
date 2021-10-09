@@ -27,6 +27,9 @@ router.route('/api/chat/:id')
 router.route('/api/chat/:id/messages')
 	.get(isLoggedIn, chat.loadMessages);
 
+router.route('/api/chat/:id/markAsRead')
+	.put(isLoggedIn, chat.markAsRead);
+
 router.route('/api/messages')
 	.post(isLoggedIn, chat.createMessage);
 

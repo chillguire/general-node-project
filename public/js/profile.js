@@ -1,6 +1,6 @@
 window.addEventListener("load", function () {
 	let xhr = new XMLHttpRequest();
-	xhr.open("GET", `/api/posts?createdBy=${userID}`);
+	xhr.open("GET", `/api/posts?createdBy=${profileUserID}`);
 	xhr.onreadystatechange = function () {
 		if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 			//alert(JSON.parse(xhr.response).length);

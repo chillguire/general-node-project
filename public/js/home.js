@@ -98,6 +98,11 @@ function timeSince(date) {
 }
 
 window.addEventListener("load", function () {
+	getPosts();
+	getMessages();
+});
+
+function getPosts() {
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", '/api/posts');
 	xhr.onreadystatechange = function () {
@@ -108,7 +113,7 @@ window.addEventListener("load", function () {
 	}
 
 	xhr.send();
-});
+}
 
 document.addEventListener('click', function (event) {
 	if (event.target.className === 'material-icons') {

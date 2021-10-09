@@ -69,14 +69,15 @@
 	</div>
 
 	<%- include ('../partials/scripts') -%>
+	<script>
+		const profileUserID = "<%= profileUser._id %>";
+		const userID = "<%= currentUser.id %>";
+	</script>
 	<script src="../../js/main.js"></script>
 	<% if (profileUser._id.equals(currentUser.id)) { %>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 	<% } %>
 	<script src="../../js/profile.js"></script>
-	<script>
-		const userID = "<%= profileUser._id %>";
-	</script>
 </body>
 
 </html>
