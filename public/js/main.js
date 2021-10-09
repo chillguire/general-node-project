@@ -56,7 +56,7 @@
 })(jQuery);
 
 let connected = false;
-let socket = io('http://localhost:20001');
+let socket = io('/');
 
 socket.emit('setup', userID);
 
