@@ -24,7 +24,7 @@ const fs = require('fs');
 module.exports.load = async (req, res) => {
 	const payload = {
 		pageTitle: 'uwu',
-		currentUser: req.session.user,
+		currentUser: req.user,
 	}
 	try {
 		const user = await User.findOne({ username: req.params.username });
@@ -56,7 +56,7 @@ module.exports.uploadAvatar = async (req, res) => {
 				}
 			});
 
-			await User.findByIdAndUpdate(req.session.user.id, { avatar: filePath }, { new: true });
+			await User.findByIdAndUpdate(req.user.id, { avatar: filePath }, { new: true });
 			res.sendStatus(204);
 		} catch (error) {
 			console.log(error.message);

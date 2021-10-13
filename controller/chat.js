@@ -8,7 +8,7 @@ const ObjectID = require('mongoose').Types.ObjectId;
 module.exports.renderChatList = async (req, res) => {
 	const payload = {
 		pageTitle: 'uwu',
-		currentUser: req.session.user,
+		currentUser: req.user,
 	}
 
 	res.status(200).render('chat/home', payload);
@@ -17,7 +17,7 @@ module.exports.renderChatList = async (req, res) => {
 module.exports.renderNewForm = async (req, res) => {
 	const payload = {
 		pageTitle: 'uwu',
-		currentUser: req.session.user,
+		currentUser: req.user,
 	}
 
 	res.status(200).render('chat/new', payload);
@@ -27,10 +27,10 @@ module.exports.renderChatView = async (req, res) => {
 	try {
 		const payload = {
 			pageTitle: 'uwu',
-			currentUser: req.session.user,
+			currentUser: req.user,
 		}
 
-		const chat = await Chat.findOne({ _id: req.params.id, users: { $elemMatch: { $eq: req.session.user.id } } }).populate('users');
+		const chat = await Chat.findOne({ _id: req.params.id, users: { $elemMatch: { $eq: req.user.id } } }).populate('users');
 		if (chat) {
 			payload.chat = chat;
 			return res.status(200).render('chat/details', payload);
@@ -55,13 +55,13 @@ module.exports.create = async (req, res) => {
 				break;
 			}
 		}
-		const isSessionUserInChat = req.body.users.includes(req.session.user.id);
+		const isSessionUserInChat = req.body.users.includes(req.user.id);
 		if (!isArrayValid || isSessionUserInChat) {
 			return res.status(400).end();
 		}
 
 		const users = req.body.users;
-		users.push(req.session.user.id);
+		users.push(req.user.id);
 		users.sort();
 		let chat = await Chat.findOne({ users: users });
 		if (chat) {
@@ -84,7 +84,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.loadChats = async (req, res) => {
 	try {
-		const chats = await Chat.find({ users: { $elemMatch: { $eq: req.session.user.id } } })
+		const chats = await Chat.find({ users: { $elemMatch: { $eq: req.user.id } } })
 			.populate('users')
 			.populate({
 				path: 'latestMessage',
@@ -116,7 +116,7 @@ module.exports.updateName = async (req, res) => {
 
 module.exports.loadChat = async (req, res) => {
 	try {
-		const chat = await Chat.findOne({ _id: req.params.id, users: { $elemMatch: { $eq: req.session.user.id } } }).populate('users');
+		const chat = await Chat.findOne({ _id: req.params.id, users: { $elemMatch: { $eq: req.user.id } } }).populate('users');
 		res.status(200).send(chat);
 	} catch (error) {
 		console.log(error.message);
@@ -132,7 +132,7 @@ module.exports.createMessage = async (req, res) => {
 
 		//message id already exist, is id valid, 
 		let newMessage = {
-			sender: req.session.user.id,
+			sender: req.user.id,
 			content: req.body.content.trim(),
 			chat: req.body.chat,
 		}
@@ -173,8 +173,8 @@ module.exports.loadMessages = async (req, res) => {
 
 module.exports.markAsRead = async (req, res) => {
 	try {
-		await Message.updateMany({ chat: req.params.id }, { $addToSet: { readBy: req.session.user.id } });
-		await Notification.updateMany({ contentID: req.params.id, toUser: req.session.user.id }, { opened: true });
+		await Message.updateMany({ chat: req.params.id }, { $addToSet: { readBy: req.user.id } });
+		await Notification.updateMany({ contentID: req.params.id, toUser: req.user.id }, { opened: true });
 
 		res.sendStatus(204);
 	} catch (error) {

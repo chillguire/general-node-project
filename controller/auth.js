@@ -1,5 +1,5 @@
 const User = require('../models/user');
-
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 
 
@@ -53,10 +53,14 @@ module.exports.register = async (req, res) => {
 		});
 		await user.save();
 
-		req.session.user = {
-			id: user._id,
-			username: user.username,
-		};
+		const token = jwt.sign(
+			{
+				id: user._id,
+				username: user.username,
+			},
+			process.env.SECRET || 'uwu'
+		);
+		res.cookie('auth-token', token, { maxAge: 900000, httpOnly: true });
 
 		//return res.status(200).send(user);
 		return res.redirect('/');
@@ -98,10 +102,14 @@ module.exports.login = async (req, res) => {
 			return res.status(401).render('auth/login', payload);
 		}
 
-		req.session.user = {
-			id: user._id,
-			username: user.username,
-		};
+		const token = jwt.sign(
+			{
+				id: user._id,
+				username: user.username,
+			},
+			process.env.SECRET || 'uwu'
+		);
+		res.cookie('auth-token', token, { maxAge: 900000, httpOnly: true });
 
 		//return res.status(200).send(user);
 		return res.redirect('/');
@@ -118,7 +126,6 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.logout = async (req, res) => {
-	req.session.destroy(function (error) {
-		res.send('/');
-	});
+	res.clearCookie('auth-token');
+	res.send('/');
 }

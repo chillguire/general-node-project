@@ -23,7 +23,7 @@ module.exports.create = async (req, res) => {
 
 	let newPost = {
 		content: req.body.content.trim(),
-		createdBy: req.session.user.id,
+		createdBy: req.user.id,
 	}
 	const post = new Post(newPost);
 

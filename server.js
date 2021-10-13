@@ -5,7 +5,7 @@ const path = require('path');
 
 const mongoose = require('mongoose');
 
-const session = require('express-session');
+const cookieParser = require('cookie-parser')
 
 const { isLoggedIn } = require('./middleware/middleware');
 
@@ -36,30 +36,15 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//? sessions
-const sessionSecret = process.env.SESSION_SECRET || 'uwu';
-const sessionConfig = {
-	name: 'nodeSession',
-	secret: sessionSecret,
-	resave: false,
-	saveUninitialized: true,
-	cookie: {
-		httpOnly: true,
-		secure: false,
-		sameSite: 'Lax',
-		expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // ms/s * s/m * m/h * h/d * d/w
-		maxAge: 1000 * 60 * 60 * 24 * 7,
-	}
-}
-
-app.use(session(sessionConfig));
+// //? cookies
+app.use(cookieParser())
 
 
 //** ROUTES
 app.get('/', isLoggedIn, (req, res) => {
 	const payload = {
 		pageTitle: 'uwu',
-		currentUser: req.session.user,
+		currentUser: req.user,
 	}
 
 	res.status(200).render('home/home', payload);
@@ -122,7 +107,7 @@ io.on('connection', (socket) => {
 
 	// socket.on('notification', (users) => {
 	// 	for (let i = 0; i < users.length; i++) {
-	// 		if (users[i] === req.session.user.id) {
+	// 		if (users[i] === req.user.id) {
 	// 			continue;
 	// 		}
 	// 		socket.to(users[i]).emit('notification received', message);

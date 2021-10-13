@@ -3,7 +3,7 @@ const Notification = require('../models/notification');
 
 module.exports.load = async (req, res) => {
 	try {
-		const notifications = await Notification.find({ toUser: req.session.user.id, opened: false })
+		const notifications = await Notification.find({ toUser: req.user.id, opened: false })
 			.populate('toUser')
 			.populate('fromUser')
 			.sort({ updatedAt: -1 });
