@@ -14,6 +14,7 @@ const io = require('socket.io')(http, { pingTimeout: 60000 });
 
 //** DB CONFIG
 const dbURL = process.env.DB_URL || 'mongodb://localhost:27017/general-node-project';
+mongoose.set('strictQuery', false);
 mongoose.connect(dbURL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
