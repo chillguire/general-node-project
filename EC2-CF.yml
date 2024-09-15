@@ -20,8 +20,8 @@ Resources:
         - Key: Name
           Value: general-node-project
       SecurityGroupIds:
-        - sg-08f7645e967dcfdab
-        - sg-0ed0873533f853c30
+        - sg-037e6599e37f00e16
+        - sg-0aab076e1f0b08dc7
       UserData:
         "Fn::Base64": !Sub |
           #!/bin/bash
